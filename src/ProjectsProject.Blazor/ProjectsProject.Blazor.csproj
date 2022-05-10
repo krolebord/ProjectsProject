@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Autofac.WebAssembly" Version="5.2.1" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme" Version="5.2.1" />
+    <ProjectReference Include="..\..\packages\Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme\Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme.csproj" />
   </ItemGroup>
 
   <ItemGroup>
