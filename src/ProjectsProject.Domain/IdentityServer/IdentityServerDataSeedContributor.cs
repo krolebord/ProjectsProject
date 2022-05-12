@@ -52,7 +52,7 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
     }
 
     [UnitOfWork]
-    public virtual async Task SeedAsync(DataSeedContext context)
+    public virtual async Task SeedAsync(DataSeedContext? context)
     {
         using (_currentTenant.Change(context?.TenantId))
         {
@@ -204,14 +204,14 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
         string name,
         IEnumerable<string> scopes,
         IEnumerable<string> grantTypes,
-        string secret = null,
-        string redirectUri = null,
-        string postLogoutRedirectUri = null,
-        string frontChannelLogoutUri = null,
+        string? secret = null,
+        string? redirectUri = null,
+        string? postLogoutRedirectUri = null,
+        string? frontChannelLogoutUri = null,
         bool requireClientSecret = true,
         bool requirePkce = false,
-        IEnumerable<string> permissions = null,
-        IEnumerable<string> corsOrigins = null)
+        IEnumerable<string>? permissions = null,
+        IEnumerable<string>? corsOrigins = null)
     {
         var client = await _clientRepository.FindByClientIdAsync(name);
         if (client == null)

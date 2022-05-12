@@ -5,6 +5,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,6 +28,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\ProjectsProject.HttpApi.Client\ProjectsProject.HttpApi.Client.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Pages\Labels\LabelsPage.razor" />
   </ItemGroup>
 
 </Project>

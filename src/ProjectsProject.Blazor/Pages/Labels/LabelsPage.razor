@@ -1,0 +1,118 @@
+@page "/labels"
+
+@using ProjectsProject.Localization
+@using ProjectsProject.Labels
+@using NUglify
+@using Severity=ProjectsProject.Enums.Severity
+@inherits Volo.Abp.AspNetCore.Components.Web.BasicTheme.Components.MudCrudPageBase<ProjectsProject.Labels.ILabelsAppService, ProjectsProject.Labels.LabelDto, Guid, Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto, ProjectsProject.Labels.LabelWriteDto>
+@inject AbpBlazorMessageLocalizerHelper<ProjectsProjectResource> LH
+
+<MudDataGrid T="LabelDto"
+             @ref="DataGrid"
+             Striped="true"
+             Hideable="true"
+             Elevation="8"
+             ServerData="LoadServerData">
+<ToolBarContent>
+    <MudText Typo="Typo.h5">@L["Labels"]</MudText>
+    <MudSpacer />
+    <MudButton Color="Color.Primary"
+               Variant="Variant.Outlined"
+               Disabled="!HasCreatePermission"
+               OnClick="OpenCreateModalAsync">
+        @L["NewLabel"]
+    </MudButton>
+</ToolBarContent>
+<Columns>
+    <MudBlazor.Column T="LabelDto"
+                      Field="@nameof(LabelDto.Id)"
+                      Hideable="false"
+                      Title="@L["Actions"]">
+        <CellTemplate>
+            @if (HasUpdatePermission)
+            {
+                <MudIconButton Icon="fas fa-edit" 
+                               OnClick="@(async _ => { await OpenEditModalAsync(context.Item); })"
+                               Size="Size.Small" />
+            }
+            @if (HasDeletePermission)
+            {   
+                <MudIconButton Icon="fas fa-trash" 
+                               OnClick="@(async _ => { await DeleteEntityAsync(context.Item);} )"
+                               Size="Size.Small" />
+            }
+        </CellTemplate>
+    </MudBlazor.Column>
+    <MudBlazor.Column T="LabelDto"
+                      Field="@nameof(LabelDto.Name)"
+                      Hideable="false"
+                      Title=@L["Name"] />
+    <MudBlazor.Column T="LabelDto"
+                      Field="@nameof(LabelDto.Color)"
+                      Title=@L["Color"] />
+</Columns>
+</MudDataGrid>
+
+<MudDialog @bind-IsVisible="CreateDialogVisible" 
+           Options="DialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">@L["NewLabel"]</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudForm Model="@NewEntity"
+                 @ref="CreateForm">
+            <MudTextField @bind-Value="@NewEntity.Name" 
+                          Label=@L["Name"]
+                          For=@(() => EditingEntity.Name) />
+            <br />
+            <MudColorPicker @bind-Text="@NewEntity.Color"/>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Secondary" 
+                   OnClick="CloseCreateModalAsync">
+            @L["Cancel"]
+        </MudButton>
+        <MudButton Variant="Variant.Filled" 
+                   Color="Color.Primary" 
+                   OnClick="CreateEntityAsync">
+            @L["Save"]
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+<MudDialog @bind-IsVisible="EditDialogVisible"
+           Options="DialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">@EditingEntity.Name</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudForm Model="@EditingEntity"
+                 @ref="EditForm">
+            <MudTextField @bind-Value="@EditingEntity.Name" 
+                          Label=@L["Name"]
+                          For=@(() => EditingEntity.Name) />
+            <br />
+            <MudColorPicker @bind-Text="@EditingEntity.Color"/>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Secondary" 
+                   OnClick="CloseEditModalAsync">
+            @L["Cancel"]
+        </MudButton>
+        <MudButton Variant="Variant.Filled" 
+                   Color="Color.Primary" 
+                   OnClick="UpdateEntityAsync">
+            @L["Save"]
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code
+{
+    public LabelsPage()
+    {
+        LocalizationResource = typeof(Resource);
+    }
+}

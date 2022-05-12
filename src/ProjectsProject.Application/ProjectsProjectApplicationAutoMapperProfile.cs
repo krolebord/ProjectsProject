@@ -1,4 +1,9 @@
 ﻿using AutoMapper;
+using ProjectsProject.DomainModels;
+using ProjectsProject.Labels;
+using ProjectsProject.Notes;
+using ProjectsProject.Projects;
+using ProjectsProject.ToDoTasks;
 
 namespace ProjectsProject;
 
@@ -6,8 +11,16 @@ public class ProjectsProjectApplicationAutoMapperProfile : Profile
 {
     public ProjectsProjectApplicationAutoMapperProfile()
     {
-        /* You can configure your AutoMapper mapping configuration here.
-         * Alternatively, you can split your mapping configurations
-         * into multiple profile classes for a better organization. */
+        CreateMap<Project, ProjectDto>();
+        CreateMap<ProjectWriteDto, Project>();
+        
+        CreateMap<ToDoTask, ToDoTaskDto>();
+        CreateMap<ToDoTaskWriteDto, ToDoTask>();
+        
+        CreateMap<Note, NoteDto>();
+        CreateMap<NoteWriteDto, Note>();
+        
+        CreateMap<Label, LabelDto>();
+        CreateMap<LabelWriteDto, Label>();
     }
 }

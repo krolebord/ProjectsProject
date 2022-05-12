@@ -24,6 +24,209 @@ namespace ProjectsProject.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("LabelNote", b =>
+                {
+                    b.Property<Guid>("LabelsId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("NotesId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("LabelsId", "NotesId");
+
+                    b.HasIndex("NotesId");
+
+                    b.ToTable("LabelNote", (string)null);
+                });
+
+            modelBuilder.Entity("LabelProject", b =>
+                {
+                    b.Property<Guid>("LabelsId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ProjectsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("LabelsId", "ProjectsId");
+
+                    b.HasIndex("ProjectsId");
+
+                    b.ToTable("LabelProject", (string)null);
+                });
+
+            modelBuilder.Entity("LabelToDoTask", b =>
+                {
+                    b.Property<Guid>("LabelsId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TasksId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("LabelsId", "TasksId");
+
+                    b.HasIndex("TasksId");
+
+                    b.ToTable("LabelToDoTask", (string)null);
+                });
+
+            modelBuilder.Entity("ProjectsProject.DomainModels.Label", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PPLabels", (string)null);
+                });
+
+            modelBuilder.Entity("ProjectsProject.DomainModels.Note", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<Guid?>("ProjectId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Severity")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PPNotes", (string)null);
+                });
+
+            modelBuilder.Entity("ProjectsProject.DomainModels.Project", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Severity")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PPProjects", (string)null);
+                });
+
+            modelBuilder.Entity("ProjectsProject.DomainModels.ToDoTask", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("ProjectId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Severity")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PPTasks", (string)null);
+                });
+
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1946,6 +2149,107 @@ namespace ProjectsProject.Migrations
                     b.HasKey("TenantId", "Name");
 
                     b.ToTable("AbpTenantConnectionStrings", (string)null);
+                });
+
+            modelBuilder.Entity("LabelNote", b =>
+                {
+                    b.HasOne("ProjectsProject.DomainModels.Label", null)
+                        .WithMany()
+                        .HasForeignKey("LabelsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjectsProject.DomainModels.Note", null)
+                        .WithMany()
+                        .HasForeignKey("NotesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LabelProject", b =>
+                {
+                    b.HasOne("ProjectsProject.DomainModels.Label", null)
+                        .WithMany()
+                        .HasForeignKey("LabelsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjectsProject.DomainModels.Project", null)
+                        .WithMany()
+                        .HasForeignKey("ProjectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LabelToDoTask", b =>
+                {
+                    b.HasOne("ProjectsProject.DomainModels.Label", null)
+                        .WithMany()
+                        .HasForeignKey("LabelsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjectsProject.DomainModels.ToDoTask", null)
+                        .WithMany()
+                        .HasForeignKey("TasksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ProjectsProject.DomainModels.Label", b =>
+                {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ProjectsProject.DomainModels.Note", b =>
+                {
+                    b.HasOne("ProjectsProject.DomainModels.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ProjectsProject.DomainModels.Project", b =>
+                {
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ProjectsProject.DomainModels.ToDoTask", b =>
+                {
+                    b.HasOne("ProjectsProject.DomainModels.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId");
+
+                    b.HasOne("Volo.Abp.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>

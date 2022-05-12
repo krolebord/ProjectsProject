@@ -13,7 +13,7 @@ public class FakeCurrentPrincipalAccessor : ThreadCurrentPrincipalAccessor
         return GetPrincipal();
     }
 
-    private ClaimsPrincipal _principal;
+    private ClaimsPrincipal? _principal;
 
     private ClaimsPrincipal GetPrincipal()
     {

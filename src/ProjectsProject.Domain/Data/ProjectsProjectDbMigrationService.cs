@@ -85,7 +85,7 @@ public class ProjectsProjectDbMigrationService : ITransientDependency
         Logger.LogInformation("You can safely end this process...");
     }
 
-    private async Task MigrateDatabaseSchemaAsync(Tenant tenant = null)
+    private async Task MigrateDatabaseSchemaAsync(Tenant? tenant = null)
     {
         Logger.LogInformation(
             $"Migrating schema for {(tenant == null ? "host" : tenant.Name + " tenant")} database...");
@@ -96,7 +96,7 @@ public class ProjectsProjectDbMigrationService : ITransientDependency
         }
     }
 
-    private async Task SeedDataAsync(Tenant tenant = null)
+    private async Task SeedDataAsync(Tenant? tenant = null)
     {
         Logger.LogInformation($"Executing {(tenant == null ? "host" : tenant.Name + " tenant")} database seed...");
 
@@ -150,7 +150,7 @@ public class ProjectsProjectDbMigrationService : ITransientDependency
     {
         var dbMigrationsProjectFolder = GetEntityFrameworkCoreProjectFolderPath();
 
-        return Directory.Exists(Path.Combine(dbMigrationsProjectFolder, "Migrations"));
+        return Directory.Exists(Path.Combine(dbMigrationsProjectFolder ?? string.Empty, "Migrations"));
     }
 
     private void AddInitialMigration()
@@ -185,7 +185,7 @@ public class ProjectsProjectDbMigrationService : ITransientDependency
         }
     }
 
-    private string GetEntityFrameworkCoreProjectFolderPath()
+    private string? GetEntityFrameworkCoreProjectFolderPath()
     {
         var slnDirectoryPath = GetSolutionDirectoryPath();
 
@@ -200,15 +200,15 @@ public class ProjectsProjectDbMigrationService : ITransientDependency
             .FirstOrDefault(d => d.EndsWith(".EntityFrameworkCore"));
     }
 
-    private string GetSolutionDirectoryPath()
+    private string? GetSolutionDirectoryPath()
     {
         var currentDirectory = new DirectoryInfo(Directory.GetCurrentDirectory());
 
         while (Directory.GetParent(currentDirectory.FullName) != null)
         {
             currentDirectory = Directory.GetParent(currentDirectory.FullName);
-
-            if (Directory.GetFiles(currentDirectory.FullName).FirstOrDefault(f => f.EndsWith(".sln")) != null)
+            
+            if (Directory.GetFiles(currentDirectory!.FullName).FirstOrDefault(f => f.EndsWith(".sln")) != null)
             {
                 return currentDirectory.FullName;
             }

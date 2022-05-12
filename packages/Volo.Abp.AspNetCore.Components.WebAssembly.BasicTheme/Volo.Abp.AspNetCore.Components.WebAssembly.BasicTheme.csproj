@@ -6,6 +6,7 @@
     <PropertyGroup><LangVersion>latest</LangVersion>
         <TargetFramework>net6.0</TargetFramework>
         <PackageId>Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme</PackageId>
+        <Nullable>disable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>

@@ -2,7 +2,7 @@
 
 public static class ProjectsProjectConsts
 {
-    public const string DbTablePrefix = "App";
+    public const string DbTablePrefix = "PP";
 
-    public const string DbSchema = null;
+    public const string? DbSchema = null;
 }

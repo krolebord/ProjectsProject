@@ -5,6 +5,7 @@
 
   <PropertyGroup><LangVersion>latest</LangVersion>
     <TargetFramework>net6.0</TargetFramework>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

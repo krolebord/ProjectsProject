@@ -48,7 +48,6 @@ public class ProjectsProjectHttpApiHostModule : AbpModule
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         var configuration = context.Services.GetConfiguration();
-        var hostingEnvironment = context.Services.GetHostingEnvironment();
 
         ConfigureBundles();
         ConfigureUrls(configuration);

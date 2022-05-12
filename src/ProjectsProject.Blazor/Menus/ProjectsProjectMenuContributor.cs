@@ -38,9 +38,39 @@ public class ProjectsProjectMenuContributor : IMenuContributor
         context.Menu.Items.Insert(
             0,
             new ApplicationMenuItem(
-                ProjectsProjectMenus.Home,
-                l["Menu:Home"],
-                "/",
+                ProjectsProjectMenus.Projects,
+                l["Projects"],
+                "/projects",
+                icon: "fas fa-home"
+            )
+        );
+        
+        context.Menu.Items.Insert(
+            1,
+            new ApplicationMenuItem(
+                ProjectsProjectMenus.Notes,
+                l["Notes"],
+                "/notes",
+                icon: "fas fa-home"
+            )
+        );
+        
+        context.Menu.Items.Insert(
+            2,
+            new ApplicationMenuItem(
+                ProjectsProjectMenus.Tasks,
+                l["Tasks"],
+                "/tasks",
+                icon: "fas fa-home"
+            )
+        );
+        
+        context.Menu.Items.Insert(
+            3,
+            new ApplicationMenuItem(
+                ProjectsProjectMenus.Labels,
+                l["labels"],
+                "/labels",
                 icon: "fas fa-home"
             )
         );
@@ -55,12 +85,12 @@ public class ProjectsProjectMenuContributor : IMenuContributor
         var identityServerUrl = _configuration["AuthServer:Authority"] ?? "";
 
         context.Menu.AddItem(new ApplicationMenuItem(
-            "Account.Manage",
-            accountStringLocalizer["MyAccount"],
-            $"{identityServerUrl.EnsureEndsWith('/')}Account/Manage?returnUrl={_configuration["App:SelfUrl"]}",
-            icon: "fa fa-cog",
-            order: 1000,
-            null).RequireAuthenticated());
+        "Account.Manage",
+        accountStringLocalizer["MyAccount"],
+        $"{identityServerUrl.EnsureEndsWith('/')}Account/Manage?returnUrl={_configuration["App:SelfUrl"]}",
+        icon: "fa fa-cog",
+        order: 1000
+        ).RequireAuthenticated());
 
         return Task.CompletedTask;
     }

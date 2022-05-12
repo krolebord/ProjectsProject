@@ -192,9 +192,9 @@ public abstract class MudCrudPageBase<
     protected string UpdatePolicyName { get; set; }
     protected string DeletePolicyName { get; set; }
 
-    public bool HasCreatePermission { get; set; }
-    public bool HasUpdatePermission { get; set; }
-    public bool HasDeletePermission { get; set; }
+    public bool HasCreatePermission { get; set; } = true;
+    public bool HasUpdatePermission { get; set; } = true;
+    public bool HasDeletePermission { get; set; } = true;
 
     protected DialogOptions DialogOptions 
     {
@@ -202,7 +202,8 @@ public abstract class MudCrudPageBase<
         { 
             CloseButton = true,
             CloseOnEscapeKey = true,
-            DisableBackdropClick = true
+            DisableBackdropClick = true,
+            FullWidth = true
         };
     }
 
@@ -214,7 +215,7 @@ public abstract class MudCrudPageBase<
         EntityActions = new EntityActionDictionary();
     }
 
-    protected async override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         await SetPermissionsAsync();
         await SetEntityActionsAsync();
@@ -222,11 +223,11 @@ public abstract class MudCrudPageBase<
         await InvokeAsync(StateHasChanged);
     }
 
-    protected async override Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            await base.OnAfterRenderAsync(firstRender);
+            await base.OnAfterRenderAsync(true);
             await SetToolbarItemsAsync();
             await SetBreadcrumbItemsAsync();
         }

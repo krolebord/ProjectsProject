@@ -1,3 +1,3 @@
 ﻿using System.Runtime.CompilerServices;
-[assembly:InternalsVisibleToAttribute("ProjectsProject.Domain.Tests")]
-[assembly:InternalsVisibleToAttribute("ProjectsProject.TestBase")]
+[assembly:InternalsVisibleTo("ProjectsProject.Domain.Tests")]
+[assembly:InternalsVisibleTo("ProjectsProject.TestBase")]

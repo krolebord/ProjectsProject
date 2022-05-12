@@ -1,9 +1,7 @@
 ﻿@using Volo.Abp.UI.Navigation
 
 @{
-    var elementId = MenuItem.ElementId ?? "MenuItem_" + MenuItem.Name.Replace(".", "_");
     var cssClass = string.IsNullOrEmpty(MenuItem.CssClass) ? string.Empty : MenuItem.CssClass;
-    var disabled = MenuItem.IsDisabled ? "disabled" : string.Empty;
     var url = MenuItem.Url == null ? "#" : MenuItem.Url.TrimStart('/', '~');
 }
 
@@ -11,7 +9,8 @@
 {
     if (MenuItem.Url is not null)
     {
-        <MudNavLink Icon="@MenuItem.Icon" Href="@url" Target="@MenuItem.Target">
+        <MudNavLink Icon="@MenuItem.Icon" Href="@url" Target="@MenuItem.Target"
+                    Class="@cssClass" Disabled="@MenuItem.IsDisabled">
             @MenuItem.DisplayName
         </MudNavLink>
     }

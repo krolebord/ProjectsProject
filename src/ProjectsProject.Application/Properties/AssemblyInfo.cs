@@ -1,2 +1,2 @@
 ﻿using System.Runtime.CompilerServices;
-[assembly:InternalsVisibleToAttribute("ProjectsProject.Application.Tests")]
+[assembly:InternalsVisibleTo("ProjectsProject.Application.Tests")]

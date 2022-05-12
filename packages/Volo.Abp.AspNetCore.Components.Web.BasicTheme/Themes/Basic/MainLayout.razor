@@ -2,17 +2,17 @@
 
 <MudThemeProvider IsDarkMode />
 <MudSnackbarProvider />
-<MudDialogProvider />
+<MudDialogProvider FullWidth="true" Position="DialogPosition.Center"/>
 
 <MudLayout>
-    <MudAppBar Elevation="8">
+    <MudAppBar Elevation="2">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="MudBlazor.Color.Inherit" Edge="Edge.Start" 
                        OnClick="@((e) => DrawerToggle())" />
         <Branding />
         <MudSpacer />
         <NavToolbar />
     </MudAppBar>
-    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="8">
+    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2" Variant="DrawerVariant.Mini">
         <NavMenu />
     </MudDrawer>
     <MudMainContent>
