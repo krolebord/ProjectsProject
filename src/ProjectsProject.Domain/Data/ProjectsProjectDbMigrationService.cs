@@ -52,7 +52,7 @@ public class ProjectsProjectDbMigrationService : ITransientDependency
         await MigrateDatabaseSchemaAsync();
         await SeedDataAsync();
 
-        Logger.LogInformation($"Successfully completed host database migrations.");
+        Logger.LogInformation("Successfully completed host database migrations.");
 
         var tenants = await _tenantRepository.GetListAsync(includeDetails: true);
 
@@ -127,10 +127,7 @@ public class ProjectsProjectDbMigrationService : ITransientDependency
                 AddInitialMigration();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
         catch (Exception e)
         {

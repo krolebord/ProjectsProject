@@ -1,9 +1,8 @@
 @page "/tasks"
-
 @using ProjectsProject.Localization
 @using ProjectsProject.ToDoTasks
-@using NUglify
 @using Severity=ProjectsProject.Enums.Severity
+@using NUglify
 @inherits Volo.Abp.AspNetCore.Components.Web.BasicTheme.Components.MudCrudPageBase<ProjectsProject.ToDoTasks.IToDoTasksAppService, ProjectsProject.ToDoTasks.ToDoTaskDto, Guid, Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto, ProjectsProject.ToDoTasks.ToDoTaskWriteDto>
 @inject AbpBlazorMessageLocalizerHelper<ProjectsProjectResource> LH
 

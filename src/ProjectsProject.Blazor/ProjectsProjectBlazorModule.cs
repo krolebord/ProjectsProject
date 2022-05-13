@@ -9,14 +9,14 @@ using Microsoft.Extensions.DependencyInjection;
 using ProjectsProject.Blazor.Menus;
 using Volo.Abp.AspNetCore.Components.Web.BasicTheme.Themes.Basic;
 using Volo.Abp.AspNetCore.Components.Web.Theming.Routing;
+using Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme;
 using Volo.Abp.Autofac.WebAssembly;
 using Volo.Abp.AutoMapper;
-using Volo.Abp.Modularity;
-using Volo.Abp.UI.Navigation;
-using Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme;
 using Volo.Abp.Identity.Blazor.WebAssembly;
+using Volo.Abp.Modularity;
 using Volo.Abp.SettingManagement.Blazor.WebAssembly;
 using Volo.Abp.TenantManagement.Blazor.WebAssembly;
+using Volo.Abp.UI.Navigation;
 
 namespace ProjectsProject.Blazor;
 

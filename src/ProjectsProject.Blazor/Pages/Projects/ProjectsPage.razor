@@ -1,9 +1,8 @@
 @page "/projects"
-
 @using ProjectsProject.Localization
 @using ProjectsProject.Projects
-@using NUglify
 @using Severity=ProjectsProject.Enums.Severity
+@using NUglify
 @inherits Volo.Abp.AspNetCore.Components.Web.BasicTheme.Components.MudCrudPageBase<ProjectsProject.Projects.IProjectsAppService, ProjectsProject.Projects.ProjectDto, Guid, Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto, ProjectsProject.Projects.ProjectWriteDto>
 @inject AbpBlazorMessageLocalizerHelper<ProjectsProjectResource> LH
 

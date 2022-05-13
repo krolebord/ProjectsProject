@@ -8,10 +8,9 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using ProjectsProject.EntityFrameworkCore;
 using ProjectsProject.MultiTenancy;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
-using Microsoft.OpenApi.Models;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;
@@ -19,6 +18,7 @@ using Volo.Abp.AspNetCore.Authentication.JwtBearer;
 using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
@@ -217,11 +217,13 @@ public class ProjectsProjectHttpApiHostModule : AbpModule
         app.UseCors();
         app.UseAuthentication();
         app.UseJwtTokenMiddleware();
-
+        
+ #pragma warning disable CS0162
         if (MultiTenancyConsts.IsEnabled)
         {
             app.UseMultiTenancy();
         }
+ #pragma warning restore CS0162
 
         app.UseUnitOfWork();
         app.UseIdentityServer();

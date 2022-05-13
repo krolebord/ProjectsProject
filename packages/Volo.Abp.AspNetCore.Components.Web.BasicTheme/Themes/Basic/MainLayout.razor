@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using Color=MudBlazor.Color
+@inherits LayoutComponentBase
 
 <MudThemeProvider IsDarkMode />
 <MudSnackbarProvider />
@@ -6,8 +7,8 @@
 
 <MudLayout>
     <MudAppBar Elevation="2">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="MudBlazor.Color.Inherit" Edge="Edge.Start" 
-                       OnClick="@((e) => DrawerToggle())" />
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" 
+                       OnClick="@(e => DrawerToggle())" />
         <Branding />
         <MudSpacer />
         <NavToolbar />

@@ -47,3 +47,7 @@
         -webkit-transform: scale(1.0);
     }
 }
+
+.mud-navmenu.mud-navmenu-default .mud-nav-link.active:not(.mud-nav-link-disabled) .mud-nav-link-icon.mud-nav-link-icon-default {
+    color: unset;
+}

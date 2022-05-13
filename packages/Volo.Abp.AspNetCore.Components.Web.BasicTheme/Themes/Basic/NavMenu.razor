@@ -1,7 +1,9 @@
 ﻿@if (Menu != null)
 {
-    foreach (var menuItem in Menu.Items)
-    {
-        <FirstLevelNavMenuItem MenuItem="menuItem" />
-    }
+    <MudNavMenu>
+        @foreach (var menuItem in Menu.Items)
+        {
+            <FirstLevelNavMenuItem MenuItem="menuItem" />
+        }
+    </MudNavMenu>
 }

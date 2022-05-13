@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using MudBlazor;
 using ProjectsProject.Localization;
 using Volo.Abp.Account.Localization;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.UI.Navigation;
-using Volo.Abp.Users;
 
 namespace ProjectsProject.Blazor.Menus;
 
@@ -41,7 +40,7 @@ public class ProjectsProjectMenuContributor : IMenuContributor
                 ProjectsProjectMenus.Projects,
                 l["Projects"],
                 "/projects",
-                icon: "fas fa-home"
+                icon: Icons.Material.Filled.SpaceDashboard
             )
         );
         
@@ -51,7 +50,7 @@ public class ProjectsProjectMenuContributor : IMenuContributor
                 ProjectsProjectMenus.Notes,
                 l["Notes"],
                 "/notes",
-                icon: "fas fa-home"
+                icon: Icons.Material.Filled.TextSnippet
             )
         );
         
@@ -61,7 +60,7 @@ public class ProjectsProjectMenuContributor : IMenuContributor
                 ProjectsProjectMenus.Tasks,
                 l["Tasks"],
                 "/tasks",
-                icon: "fas fa-home"
+                icon: Icons.Material.Filled.TaskAlt
             )
         );
         
@@ -71,7 +70,7 @@ public class ProjectsProjectMenuContributor : IMenuContributor
                 ProjectsProjectMenus.Labels,
                 l["labels"],
                 "/labels",
-                icon: "fas fa-home"
+                icon: Icons.Material.Filled.Label
             )
         );
 
@@ -85,11 +84,11 @@ public class ProjectsProjectMenuContributor : IMenuContributor
         var identityServerUrl = _configuration["AuthServer:Authority"] ?? "";
 
         context.Menu.AddItem(new ApplicationMenuItem(
-        "Account.Manage",
-        accountStringLocalizer["MyAccount"],
-        $"{identityServerUrl.EnsureEndsWith('/')}Account/Manage?returnUrl={_configuration["App:SelfUrl"]}",
-        icon: "fa fa-cog",
-        order: 1000
+            "Account.Manage",
+            accountStringLocalizer["MyAccount"],
+            $"{identityServerUrl.EnsureEndsWith('/')}Account/Manage?returnUrl={_configuration["App:SelfUrl"]}",
+            icon: "fa fa-cog",
+            order: 1000
         ).RequireAuthenticated());
 
         return Task.CompletedTask;

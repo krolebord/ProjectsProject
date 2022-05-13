@@ -1,14 +1,16 @@
-﻿@using Volo.Abp.Localization
+﻿@using System.Collections.Immutable
 @using System.Globalization
-@using System.Collections.Immutable
+@using Volo.Abp.Localization
+@using Color=MudBlazor.Color
+@using Direction=MudBlazor.Direction
 @inject ILanguageProvider LanguageProvider
 @inject IJSRuntime JsRuntime
 
 @if (_otherLanguages is not null && _otherLanguages.Any())
 {
-    <MudMenu Color="MudBlazor.Color.Inherit" Direction="MudBlazor.Direction.Left" OffsetX="true" Dense="true">
+    <MudMenu Color="Color.Inherit" Direction="Direction.Left" OffsetX="true" Dense="true">
         <ActivatorContent>
-            <MudChip Color="MudBlazor.Color.Primary">
+            <MudChip Color="Color.Primary">
                 @_currentLanguage.DisplayName
             </MudChip>
         </ActivatorContent>

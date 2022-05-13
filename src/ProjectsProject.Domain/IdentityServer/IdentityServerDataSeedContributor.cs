@@ -14,9 +14,9 @@ using Volo.Abp.IdentityServer.IdentityResources;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.Uow;
-using ApiResource = Volo.Abp.IdentityServer.ApiResources.ApiResource;
-using ApiScope = Volo.Abp.IdentityServer.ApiScopes.ApiScope;
-using Client = Volo.Abp.IdentityServer.Clients.Client;
+using ApiResource=Volo.Abp.IdentityServer.ApiResources.ApiResource;
+using ApiScope=Volo.Abp.IdentityServer.ApiScopes.ApiScope;
+using Client=Volo.Abp.IdentityServer.Clients.Client;
 
 namespace ProjectsProject.IdentityServer;
 
@@ -285,8 +285,7 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
             await _permissionDataSeeder.SeedAsync(
                 ClientPermissionValueProvider.ProviderName,
                 name,
-                permissions,
-                null
+                permissions
             );
         }
 

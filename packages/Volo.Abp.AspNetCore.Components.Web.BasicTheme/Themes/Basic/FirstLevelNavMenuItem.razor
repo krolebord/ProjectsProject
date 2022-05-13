@@ -1,6 +1,4 @@
-﻿@using Volo.Abp.UI.Navigation
-
-@{
+﻿@{
     var cssClass = string.IsNullOrEmpty(MenuItem.CssClass) ? string.Empty : MenuItem.CssClass;
     var url = MenuItem.Url == null ? "#" : MenuItem.Url.TrimStart('/', '~');
 }

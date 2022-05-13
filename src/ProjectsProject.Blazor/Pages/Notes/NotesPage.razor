@@ -1,10 +1,8 @@
 @page "/notes"
-
 @using ProjectsProject.Localization
-@using NUglify
 @using ProjectsProject.Notes
 @using Severity=ProjectsProject.Enums.Severity
-@using Microsoft.AspNetCore.Components
+@using NUglify
 @inherits Volo.Abp.AspNetCore.Components.Web.BasicTheme.Components.MudCrudPageBase<ProjectsProject.Notes.INotesAppService, ProjectsProject.Notes.NoteDto, Guid, Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto, ProjectsProject.Notes.NoteWriteDto>
 @inject AbpBlazorMessageLocalizerHelper<ProjectsProjectResource> LH
 

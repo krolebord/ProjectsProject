@@ -4,8 +4,8 @@ using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement;
-using Volo.Abp.TenantManagement;
 using Volo.Abp.SettingManagement;
+using Volo.Abp.TenantManagement;
 using Volo.Abp.VirtualFileSystem;
 
 namespace ProjectsProject;
@@ -26,8 +26,7 @@ public class ProjectsProjectHttpApiClientModule : AbpModule
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         context.Services.AddHttpClientProxies(
-            typeof(ProjectsProjectApplicationContractsModule).Assembly,
-            RemoteServiceName
+            typeof(ProjectsProjectApplicationContractsModule).Assembly
         );
 
         Configure<AbpVirtualFileSystemOptions>(options =>

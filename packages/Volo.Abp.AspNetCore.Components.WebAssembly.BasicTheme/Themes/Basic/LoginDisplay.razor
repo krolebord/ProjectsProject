@@ -1,5 +1,7 @@
-﻿@using Microsoft.Extensions.Localization
-@using global::Localization.Resources.AbpUi
+﻿@using global::Localization.Resources.AbpUi
+@using Microsoft.Extensions.Localization
+@using Color=MudBlazor.Color
+@using Direction=MudBlazor.Direction
 @inherits AbpComponentBase
 @inject IJSRuntime JsRuntime
 @inject NavigationManager Navigation
@@ -7,9 +9,9 @@
 
 <AuthorizeView>
     <Authorized>
-        <MudMenu Color="MudBlazor.Color.Inherit" Direction="MudBlazor.Direction.Left" OffsetX="true" Dense="true">
+        <MudMenu Color="Color.Inherit" Direction="Direction.Left" OffsetX="true" Dense="true">
             <ActivatorContent>
-                <MudChip Color="MudBlazor.Color.Primary">
+                <MudChip Color="Color.Primary">
                     @CurrentUser.Name
                 </MudChip>
             </ActivatorContent>
@@ -31,8 +33,8 @@
         </MudMenu>
     </Authorized>
     <NotAuthorized>
-        <MudLink Color="MudBlazor.Color.Inherit" Href="authentication/login">
-            <MudChip Color="MudBlazor.Color.Primary">
+        <MudLink Color="Color.Inherit" Href="authentication/login">
+            <MudChip Color="Color.Primary">
                 @UiLocalizer["Login"]
             </MudChip>
         </MudLink>
