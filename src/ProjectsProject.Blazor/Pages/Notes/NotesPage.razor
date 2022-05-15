@@ -2,7 +2,7 @@
 @using ProjectsProject.Localization
 @using ProjectsProject.Notes
 @using Severity=ProjectsProject.Enums.Severity
-@inherits Volo.Abp.AspNetCore.Components.Web.BasicTheme.Components.MudCrudPageBase<ProjectsProject.Notes.INotesAppService, ProjectsProject.Notes.NoteDto, Guid, Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto, ProjectsProject.Notes.NoteWriteDto>
+@inherits MudCrudPageBase<ProjectsProject.Notes.INotesAppService, ProjectsProject.Notes.NoteDto, Guid, Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto, ProjectsProject.Notes.NoteWriteDto>
 @inject AbpBlazorMessageLocalizerHelper<ProjectsProjectResource> LH
 
 @{
@@ -27,6 +27,8 @@
                     </MudSelectItem>
                 }
             </MudSelect>
+            <br />
+            <ProjectSelect @bind-ProjectId="@dto.ProjectId"/>
             <br />
             <LabelsSelect @bind-LabelIds="@dto.LabelIds"/>
         </div>;
@@ -76,6 +78,7 @@
                 <SeverityAlert Severity="@context.Item.Severity" Text="@context.Item.Title"/>
             </CellTemplate>
         </MudBlazor.Column>
+        <ProjectColumn T="NoteDto"/>
         <MudBlazor.Column T="NoteDto"
                           Field="@nameof(NoteDto.Description)"
                           Title=@L["Description"] />

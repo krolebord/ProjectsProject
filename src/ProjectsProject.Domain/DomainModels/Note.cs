@@ -7,7 +7,7 @@ using Volo.Abp.Identity;
 
 namespace ProjectsProject.DomainModels;
 
-public class Note : AuditedEntity<Guid>, IUserEntity, ILabeled, IHasSeverity
+public class Note : AuditedEntity<Guid>, IUserEntity, ILabeled, IHasSeverity, IProjectEntity
 {
     public string? Title { get; set; }
     

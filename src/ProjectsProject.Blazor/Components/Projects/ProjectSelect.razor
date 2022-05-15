@@ -1,0 +1,48 @@
+@namespace ProjectsProject.Blazor.Components
+@using ProjectsProject.Projects
+@using Volo.Abp.TenantManagement
+@inherits ProjectsProjectComponentBase
+
+<MudSelect T="Guid?" Value="ProjectId" ValueChanged="SetId" 
+           Text="@(_availableProjects.FirstOrDefault(x => x.Id == ProjectId)?.Name)"
+           Placeholder="Select project" Clearable="true">
+    @foreach (var project in _availableProjects)
+    {
+        <MudSelectItem @key="@project.Id" T="Guid?" Value="@project.Id">
+            <SeverityAlert Severity="@project.Severity" Text="@project.Name" Dense="true" Style="margin-top: -10px"/>
+        </MudSelectItem>
+    }
+</MudSelect>
+
+@code {
+    [Parameter]
+    public Guid? ProjectId { get; set; }
+    
+    [Parameter]
+    public EventCallback<Guid?> ProjectIdChanged { get; set; }
+
+    [Inject]
+    public IProjectsAppService ProjectsAppService { get; set; } = null!;
+    
+    private IEnumerable<ProjectShortDto> _availableProjects = new HashSet<ProjectShortDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _availableProjects = await ProjectsAppService.GetShortsList();
+        await base.OnInitializedAsync();
+    }
+
+    private void SetId(Guid? projectId)
+    {
+        if (projectId == ProjectId)
+        {
+            return;
+        }
+
+        ProjectId = projectId;
+        if (ProjectIdChanged.HasDelegate)
+        {
+            ProjectIdChanged.InvokeAsync(ProjectId);
+        }
+    }
+}

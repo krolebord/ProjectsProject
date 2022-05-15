@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using ProjectsProject.Common;
 using ProjectsProject.DomainModels;
+using ProjectsProject.DomainModels.Abstractions;
 using ProjectsProject.Labels;
 using ProjectsProject.Notes;
 using ProjectsProject.Projects;
@@ -12,6 +14,7 @@ public class ProjectsProjectApplicationAutoMapperProfile : Profile
     public ProjectsProjectApplicationAutoMapperProfile()
     {
         CreateMap<Project, ProjectDto>();
+        CreateMap<Project, ProjectShortDto>();
         CreateMap<ProjectWriteDto, Project>();
         
         CreateMap<ToDoTask, ToDoTaskDto>();
@@ -22,5 +25,8 @@ public class ProjectsProjectApplicationAutoMapperProfile : Profile
         
         CreateMap<Label, LabelShortDto>();
         CreateMap<LabelWriteDto, Label>();
+
+        CreateMap<IProjectEntity, IProjectEntityDto>()
+            .IncludeAllDerived();
     }
 }

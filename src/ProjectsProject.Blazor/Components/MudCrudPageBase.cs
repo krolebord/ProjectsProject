@@ -1,3 +1,4 @@
+#nullable disable
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,15 +7,17 @@ using Localization.Resources.AbpUi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 using MudBlazor;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using Volo.Abp.AspNetCore.Components;
 using Volo.Abp.AspNetCore.Components.Web.Extensibility.EntityActions;
 using Volo.Abp.AspNetCore.Components.Web.Extensibility.TableColumns;
 using Volo.Abp.Authorization;
 using Volo.Abp.BlazoriseUI.Components;
 
-namespace Volo.Abp.AspNetCore.Components.Web.BasicTheme.Components;
+namespace ProjectsProject.Blazor.Components;
 
 public abstract class MudCrudPageBase<
         TAppService,
@@ -441,6 +444,10 @@ public abstract class MudCrudPageBase<
     {
         try
         {
+            if (!await Message.Confirm("Are you sure you want to delete this entity?", "Confirm deletion"))
+            {
+                return;
+            } 
             await CheckDeletePolicyAsync();
             await OnDeletingEntityAsync();
             await AppService.DeleteAsync(entity.Id);

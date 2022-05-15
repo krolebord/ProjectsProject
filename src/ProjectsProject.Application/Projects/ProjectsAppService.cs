@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ProjectsProject.DomainModels;
@@ -53,6 +54,12 @@ public class ProjectsAppService
         await Repository.UpdateAsync(entity, autoSave: true);
 
         return await MapToGetOutputDtoAsync(entity);
+    }
+    
+    public async Task<IEnumerable<ProjectShortDto>> GetShortsList()
+    {
+        var projects = await Repository.GetListAsync();
+        return ObjectMapper.Map<ICollection<Project>, ICollection<ProjectShortDto>>(projects);
     }
 
     protected override async Task<IQueryable<Project>> CreateFilteredQueryAsync(PagedAndSortedResultRequestDto input)

@@ -3,6 +3,7 @@
 @inherits ProjectsProjectComponentBase
 <MudBlazor.Column T="T"
                   Hideable="true"
+                  Groupable="false"
                   Title=@L["Labels"]>
     <CellTemplate>
         <LabelsRow Labels="@context.Item.Labels"/>

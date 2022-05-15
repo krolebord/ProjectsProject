@@ -2,7 +2,7 @@
 @using ProjectsProject.Localization
 @using ProjectsProject.Projects
 @using Severity=ProjectsProject.Enums.Severity
-@inherits Volo.Abp.AspNetCore.Components.Web.BasicTheme.Components.MudCrudPageBase<ProjectsProject.Projects.IProjectsAppService, ProjectsProject.Projects.ProjectDto, Guid, Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto, ProjectsProject.Projects.ProjectWriteDto>
+@inherits MudCrudPageBase<ProjectsProject.Projects.IProjectsAppService, ProjectsProject.Projects.ProjectDto, Guid, Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto, ProjectsProject.Projects.ProjectWriteDto>
 @inject AbpBlazorMessageLocalizerHelper<ProjectsProjectResource> LH
 
 @{

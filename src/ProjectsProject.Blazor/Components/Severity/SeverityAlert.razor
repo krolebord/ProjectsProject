@@ -7,7 +7,8 @@
     var text = string.IsNullOrEmpty(Text) ? L[$"Enum:Severity:{(int)Severity}"] : Text;
 }
 
-<MudAlert Severity="@Severity.ToMudSeverity()" Variant="Variant.Text">
+<MudAlert Severity="@Severity.ToMudSeverity()" Variant="Variant.Text" Dense="@Dense"
+          Style="@Style">
     @text
 </MudAlert>
 
@@ -17,4 +18,10 @@
     
     [Parameter] [EditorRequired]
     public Severity Severity { get; set; }
+    
+    [Parameter]
+    public bool Dense { get; set; }
+    
+    [Parameter]
+    public string? Style { get; set; }
 }

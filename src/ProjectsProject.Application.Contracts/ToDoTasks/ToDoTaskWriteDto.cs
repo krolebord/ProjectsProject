@@ -5,7 +5,7 @@ using ProjectsProject.Enums;
 
 namespace ProjectsProject.ToDoTasks;
 
-public class ToDoTaskWriteDto : ILabeledWriteDto
+public class ToDoTaskWriteDto : ILabeledWriteDto, IProjectEntityWriteDto
 {
     public string Name { get; set; } = string.Empty;
 
@@ -16,4 +16,6 @@ public class ToDoTaskWriteDto : ILabeledWriteDto
     public Severity Severity { get; set; }
 
     public IEnumerable<Guid> LabelIds { get; set; } = new HashSet<Guid>();
+    
+    public Guid? ProjectId { get; set; }
 }

@@ -7,7 +7,7 @@ using Volo.Abp.Identity;
 
 namespace ProjectsProject.DomainModels;
 
-public class ToDoTask : CreationAuditedEntity<Guid>, IUserEntity, ILabeled, IHasSeverity
+public class ToDoTask : CreationAuditedEntity<Guid>, IUserEntity, ILabeled, IHasSeverity, IProjectEntity
 {
     public string Name { get; set; } = string.Empty;
 

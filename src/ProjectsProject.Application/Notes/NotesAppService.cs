@@ -20,7 +20,7 @@ public class NotesAppService
     
     protected override async Task<Note> GetEntityByIdAsync(Guid id)
     {
-        var query = await Repository.WithDetailsAsync(x => x.Labels);
+        var query = await Repository.WithDetailsAsync(x => x.Labels, x => x.Project);
         return await AsyncExecuter.FirstAsync(query, x => x.Id == id);
     }
 
@@ -57,6 +57,6 @@ public class NotesAppService
 
     protected override async Task<IQueryable<Note>> CreateFilteredQueryAsync(PagedAndSortedResultRequestDto input)
     {
-        return await ReadOnlyRepository.WithDetailsAsync(x => x.Labels);
+        return await ReadOnlyRepository.WithDetailsAsync(x => x.Labels, x => x.Project);
     }
 }

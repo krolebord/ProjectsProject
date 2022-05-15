@@ -1,0 +1,31 @@
+@typeparam T where T : ProjectsProject.Common.IProjectEntityDto
+@namespace ProjectsProject.Blazor.Components
+@using Severity=ProjectsProject.Enums.Severity
+@using ProjectsProject.Projects
+@inherits ProjectsProjectComponentBase
+<MudBlazor.Column T="T"
+                  Hideable="true"
+                  Title=@L["Project"]
+                  Groupable="true"
+                  Grouping="true"
+                  GroupBy="@(dto => dto.Project?.Id ?? Guid.Empty)">
+    <CellTemplate>
+        @if (context.Item.Project is not null)
+        {
+            <SeverityAlert Severity="@context.Item.Project.Severity" Text="@context.Item.Project.Name"/>
+        }
+    </CellTemplate>
+    <GroupTemplate>
+        @{
+            var project = Equals(Guid.Empty, context.Grouping.Key) ? null : context.Grouping.First().Project!;
+            if (project is null)
+            {
+                <span style="font-weight: bold">Personal</span>
+            }
+            else
+            {
+                <SeverityAlert Dense="true" Severity="@project.Severity" Text="@project.Name" Style="display: inline-block"/>
+            }
+        }
+    </GroupTemplate>
+</MudBlazor.Column>

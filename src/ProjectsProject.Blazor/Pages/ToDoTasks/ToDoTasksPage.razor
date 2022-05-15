@@ -2,7 +2,7 @@
 @using ProjectsProject.Localization
 @using ProjectsProject.ToDoTasks
 @using Severity=ProjectsProject.Enums.Severity
-@inherits Volo.Abp.AspNetCore.Components.Web.BasicTheme.Components.MudCrudPageBase<ProjectsProject.ToDoTasks.IToDoTasksAppService, ProjectsProject.ToDoTasks.ToDoTaskDto, Guid, Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto, ProjectsProject.ToDoTasks.ToDoTaskWriteDto>
+@inherits MudCrudPageBase<ProjectsProject.ToDoTasks.IToDoTasksAppService, ProjectsProject.ToDoTasks.ToDoTaskDto, Guid, Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto, ProjectsProject.ToDoTasks.ToDoTaskWriteDto>
 @inject AbpBlazorMessageLocalizerHelper<ProjectsProjectResource> LH
 
 @{
@@ -28,6 +28,8 @@
                 }
             </MudSelect>
             <br />
+            <ProjectSelect @bind-ProjectId="@dto.ProjectId"/>
+            <br />
             <LabelsSelect @bind-LabelIds="@dto.LabelIds"/>
         </div>;
 }
@@ -52,6 +54,7 @@
         <MudBlazor.Column T="ToDoTaskDto"
                           Field="@nameof(ToDoTaskDto.Id)"
                           Hideable="false"
+                          Groupable="false"
                           Title="@L["Actions"]">
             <CellTemplate>
                 @if (HasUpdatePermission)
@@ -71,6 +74,7 @@
         <MudBlazor.Column T="ToDoTaskDto"
                           Field="@nameof(ToDoTaskDto.Name)"
                           Hideable="false"
+                          Groupable="false"
                           Title=@L["Name"]>
             <CellTemplate>
                 <SeverityAlert Severity="@context.Item.Severity" Text="@context.Item.Name"/>
@@ -78,7 +82,9 @@
         </MudBlazor.Column>
         <MudBlazor.Column T="ToDoTaskDto"
                           Field="@nameof(ToDoTaskDto.Description)"
-                          Title=@L["Description"] />
+                          Title=@L["Description"]
+                          Groupable="false" />
+        <ProjectColumn T="ToDoTaskDto"/>
         <LabelColumn T="ToDoTaskDto" />
     </Columns>
 </MudDataGrid>
