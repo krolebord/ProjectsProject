@@ -2,9 +2,35 @@
 @using ProjectsProject.Localization
 @using ProjectsProject.ToDoTasks
 @using Severity=ProjectsProject.Enums.Severity
-@using NUglify
 @inherits Volo.Abp.AspNetCore.Components.Web.BasicTheme.Components.MudCrudPageBase<ProjectsProject.ToDoTasks.IToDoTasksAppService, ProjectsProject.ToDoTasks.ToDoTaskDto, Guid, Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto, ProjectsProject.ToDoTasks.ToDoTaskWriteDto>
 @inject AbpBlazorMessageLocalizerHelper<ProjectsProjectResource> LH
+
+@{
+    RenderFragment<ToDoTaskWriteDto> taskForm = dto =>
+        @<div>
+            <MudTextField @bind-Value="@dto.Name" 
+                          Label=@L["Name"]
+                          For=@(() => dto.Name) />
+            <br />
+            <MudTextField @bind-Value="@dto.Description" 
+                          Label=@L["Description"]
+                          Lines="5"
+                          For=@(() => dto.Description) />
+            <br />
+            <MudSelect T="Severity" 
+                       @bind-Value="dto.Severity"
+                       Label=@L["Severity"]>
+                @foreach (Severity severityValue in Enum.GetValues<Severity>())
+                {
+                    <MudSelectItem Value="@severityValue">
+                        @L[$"Enum:Severity:{(int)severityValue}"]
+                    </MudSelectItem>
+                }
+            </MudSelect>
+            <br />
+            <LabelsSelect @bind-LabelIds="@dto.LabelIds"/>
+        </div>;
+}
 
 <MudDataGrid T="ToDoTaskDto"
              @ref="DataGrid"
@@ -12,44 +38,49 @@
              Hideable="true"
              Elevation="8"
              ServerData="LoadServerData">
-<ToolBarContent>
-    <MudText Typo="Typo.h5">@L["ToDoTasks"]</MudText>
-    <MudSpacer />
-    <MudButton Color="Color.Primary"
-               Variant="Variant.Outlined"
-               Disabled="!HasCreatePermission"
-               OnClick="OpenCreateModalAsync">
-        @L["NewToDoTask"]
-    </MudButton>
-</ToolBarContent>
-<Columns>
-    <MudBlazor.Column T="ToDoTaskDto"
-                      Field="@nameof(ToDoTaskDto.Id)"
-                      Hideable="false"
-                      Title="@L["Actions"]">
-        <CellTemplate>
-            @if (HasUpdatePermission)
-            {
-                <MudIconButton Icon="fas fa-edit" 
-                               OnClick="@(async _ => { await OpenEditModalAsync(context.Item); })"
-                               Size="Size.Small" />
-            }
-            @if (HasDeletePermission)
-            {   
-                <MudIconButton Icon="fas fa-trash" 
-                               OnClick="@(async _ => { await DeleteEntityAsync(context.Item);} )"
-                               Size="Size.Small" />
-            }
-        </CellTemplate>
-    </MudBlazor.Column>
-    <MudBlazor.Column T="ToDoTaskDto"
-                      Field="@nameof(ToDoTaskDto.Name)"
-                      Hideable="false"
-                      Title=@L["Name"] />
-    <MudBlazor.Column T="ToDoTaskDto"
-                      Field="@nameof(ToDoTaskDto.Description)"
-                      Title=@L["Description"] />
-</Columns>
+    <ToolBarContent>
+        <MudText Typo="Typo.h5">@L["ToDoTasks"]</MudText>
+        <MudSpacer />
+        <MudButton Color="Color.Primary"
+                   Variant="Variant.Outlined"
+                   Disabled="!HasCreatePermission"
+                   OnClick="OpenCreateModalAsync">
+            @L["NewToDoTask"]
+        </MudButton>
+    </ToolBarContent>
+    <Columns>
+        <MudBlazor.Column T="ToDoTaskDto"
+                          Field="@nameof(ToDoTaskDto.Id)"
+                          Hideable="false"
+                          Title="@L["Actions"]">
+            <CellTemplate>
+                @if (HasUpdatePermission)
+                {
+                    <MudIconButton Icon="fas fa-edit" 
+                                   OnClick="@(async _ => { await OpenEditModalAsync(context.Item); })"
+                                   Size="Size.Small" />
+                }
+                @if (HasDeletePermission)
+                {   
+                    <MudIconButton Icon="fas fa-trash" 
+                                   OnClick="@(async _ => { await DeleteEntityAsync(context.Item);} )"
+                                   Size="Size.Small" />
+                }
+            </CellTemplate>
+        </MudBlazor.Column>
+        <MudBlazor.Column T="ToDoTaskDto"
+                          Field="@nameof(ToDoTaskDto.Name)"
+                          Hideable="false"
+                          Title=@L["Name"]>
+            <CellTemplate>
+                <SeverityAlert Severity="@context.Item.Severity" Text="@context.Item.Name"/>
+            </CellTemplate>
+        </MudBlazor.Column>
+        <MudBlazor.Column T="ToDoTaskDto"
+                          Field="@nameof(ToDoTaskDto.Description)"
+                          Title=@L["Description"] />
+        <LabelColumn T="ToDoTaskDto" />
+    </Columns>
 </MudDataGrid>
 
 <MudDialog @bind-IsVisible="CreateDialogVisible" 
@@ -60,24 +91,7 @@
     <DialogContent>
         <MudForm Model="@NewEntity"
                  @ref="CreateForm">
-            <MudTextField @bind-Value="@NewEntity.Name" 
-                          Label=@L["Name"]
-                          For=@(() => NewEntity.Name) />
-            <br />
-            <MudTextField @bind-Value="@NewEntity.Description" 
-                          Label=@L["Description"]
-                          For=@(() => NewEntity.Description) />
-            <br />
-            <MudSelect T="Severity" 
-                       @bind-Value="NewEntity.Severity"
-                       Label=@L["Severity"]>
-                @foreach (Severity severityValue in Enum.GetValues<Severity>())
-                {
-                    <MudSelectItem Value="@severityValue">
-                        @L[$"Enum:Severity:{(int)severityValue}"]
-                    </MudSelectItem>
-                }
-            </MudSelect>
+            @taskForm(NewEntity)
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -101,24 +115,7 @@
     <DialogContent>
         <MudForm Model="@EditingEntity"
                  @ref="EditForm">
-            <MudTextField @bind-Value="@EditingEntity.Name" 
-                          Label=@L["Name"]
-                          For=@(() => EditingEntity.Name) />
-            <br />
-            <MudTextField @bind-Value="@EditingEntity.Description" 
-                          Label=@L["Name"]
-                          For=@(() => EditingEntity.Description) />
-            <br />
-            <MudSelect T="Severity" 
-                       @bind-Value="EditingEntity.Severity"
-                       Label=@L["Severity"]>
-                @foreach (Severity severityValue in Enum.GetValues<Severity>())
-                {
-                    <MudSelectItem Value="@severityValue">
-                        @L[$"Enum:Severity:{(int)severityValue}"]
-                    </MudSelectItem>
-                }
-            </MudSelect>
+            @taskForm(EditingEntity)
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -138,6 +135,6 @@
 {
     public ToDoTasksPage()
     {
-        LocalizationResource = typeof(Resource);
+        LocalizationResource = typeof(ProjectsProjectResource);
     }
 }

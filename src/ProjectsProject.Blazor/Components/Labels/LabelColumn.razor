@@ -1,0 +1,10 @@
+@typeparam T where T : ProjectsProject.Common.ILabeledDto
+@namespace ProjectsProject.Blazor.Components
+@inherits ProjectsProjectComponentBase
+<MudBlazor.Column T="T"
+                  Hideable="true"
+                  Title=@L["Labels"]>
+    <CellTemplate>
+        <LabelsRow Labels="@context.Item.Labels"/>
+    </CellTemplate>
+</MudBlazor.Column>

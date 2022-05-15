@@ -140,6 +140,7 @@ public class ProjectsProjectHttpApiHostModule : AbpModule
             },
             options =>
             {
+                options.HideAbpEndpoints();
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "ProjectsProject API", Version = "v1" });
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type => type.FullName);
@@ -217,7 +218,8 @@ public class ProjectsProjectHttpApiHostModule : AbpModule
         app.UseCors();
         app.UseAuthentication();
         app.UseJwtTokenMiddleware();
-        
+
+        // ReSharper disable once HeuristicUnreachableCode
  #pragma warning disable CS0162
         if (MultiTenancyConsts.IsEnabled)
         {

@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Blazorise.Bootstrap5" Version="1.0.2" />
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.0.2" />
+    <PackageReference Include="Krolebord.CustomPackages.Blazor.StateNotifiers" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0" />
   </ItemGroup>
@@ -32,6 +33,10 @@
 
   <ItemGroup>
     <AdditionalFiles Include="Pages\Labels\LabelsPage.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Projects" />
   </ItemGroup>
 
 </Project>

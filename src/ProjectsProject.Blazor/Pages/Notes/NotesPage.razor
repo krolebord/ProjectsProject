@@ -2,9 +2,35 @@
 @using ProjectsProject.Localization
 @using ProjectsProject.Notes
 @using Severity=ProjectsProject.Enums.Severity
-@using NUglify
 @inherits Volo.Abp.AspNetCore.Components.Web.BasicTheme.Components.MudCrudPageBase<ProjectsProject.Notes.INotesAppService, ProjectsProject.Notes.NoteDto, Guid, Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto, ProjectsProject.Notes.NoteWriteDto>
 @inject AbpBlazorMessageLocalizerHelper<ProjectsProjectResource> LH
+
+@{
+    RenderFragment<NoteWriteDto> noteForm = dto =>
+        @<div>
+            <MudTextField @bind-Value="@dto.Title" 
+                          Label=@L["Title"]
+                          For=@(() => dto.Title) />
+            <br />
+            <MudTextField @bind-Value="@dto.Description" 
+                          Label=@L["Description"]
+                          Lines="5"
+                          For=@(() => dto.Description) />
+            <br />
+            <MudSelect T="Severity" 
+                       @bind-Value="dto.Severity"
+                       Label=@L["Severity"]>
+                @foreach (Severity severityValue in Enum.GetValues<Severity>())
+                {
+                    <MudSelectItem Value="@severityValue">
+                        @L[$"Enum:Severity:{(int)severityValue}"]
+                    </MudSelectItem>
+                }
+            </MudSelect>
+            <br />
+            <LabelsSelect @bind-LabelIds="@dto.LabelIds"/>
+        </div>;
+}
 
 <MudDataGrid T="NoteDto"
              @ref="DataGrid"
@@ -12,44 +38,49 @@
              Hideable="true"
              Elevation="8"
              ServerData="LoadServerData">
-<ToolBarContent>
-    <MudText Typo="Typo.h5">@L["Notes"]</MudText>
-    <MudSpacer />
-    <MudButton Color="Color.Primary"
-               Variant="Variant.Outlined"
-               Disabled="!HasCreatePermission"
-               OnClick="OpenCreateModalAsync">
-        @L["NewNote"]
-    </MudButton>
-</ToolBarContent>
-<Columns>
-    <MudBlazor.Column T="NoteDto"
-                      Field="@nameof(NoteDto.Id)"
-                      Hideable="false"
-                      Title="@L["Actions"]">
-        <CellTemplate>
-            @if (HasUpdatePermission)
-            {
-                <MudIconButton Icon="fas fa-edit" 
-                               OnClick="@(async _ => { await OpenEditModalAsync(context.Item); })"
-                               Size="Size.Small" />
-            }
-            @if (HasDeletePermission)
-            {   
-                <MudIconButton Icon="fas fa-trash" 
-                               OnClick="@(async _ => { await DeleteEntityAsync(context.Item);} )"
-                               Size="Size.Small" />
-            }
-        </CellTemplate>
-    </MudBlazor.Column>
-    <MudBlazor.Column T="NoteDto"
-                      Field="@nameof(NoteDto.Title)"
-                      Hideable="false"
-                      Title=@L["Title"] />
-    <MudBlazor.Column T="NoteDto"
-                      Field="@nameof(NoteDto.Description)"
-                      Title=@L["Description"] />
-</Columns>
+    <ToolBarContent>
+        <MudText Typo="Typo.h5">@L["Notes"]</MudText>
+        <MudSpacer />
+        <MudButton Color="Color.Primary"
+                   Variant="Variant.Outlined"
+                   Disabled="!HasCreatePermission"
+                   OnClick="OpenCreateModalAsync">
+            @L["NewNote"]
+        </MudButton>
+    </ToolBarContent>
+    <Columns>
+        <MudBlazor.Column T="NoteDto"
+                          Field="@nameof(NoteDto.Id)"
+                          Hideable="false"
+                          Title="@L["Actions"]">
+            <CellTemplate>
+                @if (HasUpdatePermission)
+                {
+                    <MudIconButton Icon="fas fa-edit" 
+                                   OnClick="@(async _ => { await OpenEditModalAsync(context.Item); })"
+                                   Size="Size.Small" />
+                }
+                @if (HasDeletePermission)
+                {   
+                    <MudIconButton Icon="fas fa-trash" 
+                                   OnClick="@(async _ => { await DeleteEntityAsync(context.Item);} )"
+                                   Size="Size.Small" />
+                }
+            </CellTemplate>
+        </MudBlazor.Column>
+        <MudBlazor.Column T="NoteDto"
+                          Field="@nameof(NoteDto.Title)"
+                          Hideable="false"
+                          Title=@L["Title"]>
+            <CellTemplate>
+                <SeverityAlert Severity="@context.Item.Severity" Text="@context.Item.Title"/>
+            </CellTemplate>
+        </MudBlazor.Column>
+        <MudBlazor.Column T="NoteDto"
+                          Field="@nameof(NoteDto.Description)"
+                          Title=@L["Description"] />
+        <LabelColumn T="NoteDto" />
+    </Columns>
 </MudDataGrid>
 
 <MudDialog @bind-IsVisible="CreateDialogVisible" 
@@ -60,24 +91,7 @@
     <DialogContent>
         <MudForm Model="@NewEntity"
                  @ref="CreateForm">
-            <MudTextField @bind-Value="@NewEntity.Title" 
-                          Label=@L["Title"]
-                          For=@(() => NewEntity.Title) />
-            <br />
-            <MudTextField @bind-Value="@NewEntity.Description" 
-                          Label=@L["Description"]
-                          For=@(() => NewEntity.Description) />
-            <br />
-            <MudSelect T="Severity" 
-                       @bind-Value="NewEntity.Severity"
-                       Label=@L["Severity"]>
-                @foreach (Severity severityValue in Enum.GetValues<Severity>())
-                {
-                    <MudSelectItem Value="@severityValue">
-                        @L[$"Enum:Severity:{(int)severityValue}"]
-                    </MudSelectItem>
-                }
-            </MudSelect>
+            @noteForm(NewEntity)
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -101,24 +115,7 @@
     <DialogContent>
         <MudForm Model="@EditingEntity"
                  @ref="EditForm">
-            <MudTextField @bind-Value="@EditingEntity.Title" 
-                          Label=@L["Title"]
-                          For=@(() => EditingEntity.Title) />
-            <br />
-            <MudTextField @bind-Value="@EditingEntity.Description" 
-                          Label=@L["Description"]
-                          For=@(() => EditingEntity.Description) />
-            <br />
-            <MudSelect T="Severity" 
-                       @bind-Value="EditingEntity.Severity"
-                       Label=@L["Severity"]>
-                @foreach (Severity severityValue in Enum.GetValues<Severity>())
-                {
-                    <MudSelectItem Value="@severityValue">
-                        @L[$"Enum:Severity:{(int)severityValue}"]
-                    </MudSelectItem>
-                }
-            </MudSelect>
+            @noteForm(EditingEntity)
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -138,6 +135,6 @@
 {
     public NotesPage()
     {
-        LocalizationResource = typeof(Resource);
+        LocalizationResource = typeof(ProjectsProjectResource);
     }
 }

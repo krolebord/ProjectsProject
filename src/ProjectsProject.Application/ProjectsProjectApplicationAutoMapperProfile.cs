@@ -20,7 +20,7 @@ public class ProjectsProjectApplicationAutoMapperProfile : Profile
         CreateMap<Note, NoteDto>();
         CreateMap<NoteWriteDto, Note>();
         
-        CreateMap<Label, LabelDto>();
+        CreateMap<Label, LabelShortDto>();
         CreateMap<LabelWriteDto, Label>();
     }
 }

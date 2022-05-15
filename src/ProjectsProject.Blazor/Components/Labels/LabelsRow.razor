@@ -1,0 +1,15 @@
+@using ProjectsProject.Labels
+@namespace ProjectsProject.Blazor.Components
+<MudStack Row="true" Spacing="0" Style="flex-wrap: wrap">
+    @foreach (var label in Labels)
+    {
+        <LabelChip @key="@label.Id" Label="label"/>
+    }
+</MudStack>
+
+@code {
+
+    [Parameter]
+    public IEnumerable<LabelShortDto> Labels { get; set; } = new List<LabelShortDto>();
+
+}

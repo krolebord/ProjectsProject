@@ -1,0 +1,71 @@
+@using ProjectsProject.Labels
+@using MudBlazor.Utilities
+@namespace ProjectsProject.Blazor.Components
+
+@{
+    MudColor? mainColor = null;
+    string? style = null;
+
+    if (string.IsNullOrWhiteSpace(ColorValue))
+    {
+        return;
+    }
+
+    try
+    {
+        mainColor = new MudColor(ColorValue);
+    }
+    catch (Exception)
+    {
+        mainColor = null;
+    }
+
+    if (mainColor is not null)
+    {
+        var backgroundColor = mainColor.SetAlpha(0.06);
+
+        style = StyleBuilder.Empty()
+            .AddStyle("--mud-palette-secondary-rgb", $"{mainColor.R}, {mainColor.G}, {mainColor.B}")
+            .AddStyle("--mud-palette-secondary", mainColor.Value)
+            .AddStyle("--mud-palette-secondary-hover", backgroundColor.Value)
+            .Build();
+    }
+
+    RenderFragment labelChip =
+        @<MudChip Color="MudBlazor.Color.Secondary" Variant="Variant.Text" Style="@style">
+            @NameValue
+        </MudChip>;
+}
+
+@if (string.IsNullOrEmpty(DescriptionValue))
+{
+    @labelChip
+}
+else
+{
+    <MudTooltip Text="@DescriptionValue" Delay="0.4">
+        @labelChip
+    </MudTooltip>
+}
+
+@code {
+    
+    [Parameter]
+    public LabelShortDto? Label { get; set; }
+
+    [Parameter]
+    public string? Name { get; set; }
+    
+    [Parameter]
+    public string? Color { get; set; }
+    
+    [Parameter]
+    public string? Description { get; set; }
+
+    private string NameValue => Name ?? Label?.Name ?? "Label";
+
+    private string? ColorValue => Color ?? Label?.Color;
+
+    private string? DescriptionValue => Description ?? Label?.Description;
+
+}

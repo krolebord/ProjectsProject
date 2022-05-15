@@ -7,7 +7,7 @@ using Volo.Abp.Domain.Repositories;
 namespace ProjectsProject.Labels;
 
 public class LabelsAppService
-    : CrudAppService<Label, LabelDto, Guid, PagedAndSortedResultRequestDto, LabelWriteDto>, ILabelsAppService
+    : CrudAppService<Label, LabelShortDto, Guid, PagedAndSortedResultRequestDto, LabelWriteDto>, ILabelsAppService
 {
     public LabelsAppService(IRepository<Label, Guid> repository) : base(repository)
     {}

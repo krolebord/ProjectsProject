@@ -5,5 +5,5 @@ using Volo.Abp.Application.Services;
 namespace ProjectsProject.Labels;
 
 public interface ILabelsAppService
-    : ICrudAppService<LabelDto, Guid, PagedAndSortedResultRequestDto, LabelWriteDto>
+    : ICrudAppService<LabelShortDto, Guid, PagedAndSortedResultRequestDto, LabelWriteDto>
 {}

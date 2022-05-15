@@ -1,0 +1,20 @@
+@using ProjectsProject.Common
+@using Severity=ProjectsProject.Enums.Severity
+@namespace ProjectsProject.Blazor.Components
+@inherits ProjectsProjectComponentBase
+
+@{
+    var text = string.IsNullOrEmpty(Text) ? L[$"Enum:Severity:{(int)Severity}"] : Text;
+}
+
+<MudAlert Severity="@Severity.ToMudSeverity()" Variant="Variant.Text">
+    @text
+</MudAlert>
+
+@code {
+    [Parameter]
+    public string? Text { get; set; }
+    
+    [Parameter] [EditorRequired]
+    public Severity Severity { get; set; }
+}

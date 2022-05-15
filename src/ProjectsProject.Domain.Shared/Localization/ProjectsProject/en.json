@@ -3,6 +3,11 @@
   "texts": {
     "Menu:Home": "Home",
     "Welcome": "Welcome",
-    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io."
+    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
+    "Enum:Severity:0": "Default",
+    "Enum:Severity:1": "Info",
+    "Enum:Severity:2": "Success",
+    "Enum:Severity:3": "Warning",
+    "Enum:Severity:4": "Danger"
   }
 }

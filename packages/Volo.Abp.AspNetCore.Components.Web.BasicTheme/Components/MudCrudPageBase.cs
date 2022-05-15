@@ -365,6 +365,7 @@ public abstract class MudCrudPageBase<
             var validate = true;
             if (CreateForm is not null)
             {
+                await CreateForm.Validate();
                 validate = CreateForm.IsValid;
             }
             if (validate)
@@ -404,6 +405,7 @@ public abstract class MudCrudPageBase<
             var validate = true;
             if (EditForm is not null)
             {
+                await EditForm.Validate();
                 validate = EditForm.IsValid;
             }
             if (validate)

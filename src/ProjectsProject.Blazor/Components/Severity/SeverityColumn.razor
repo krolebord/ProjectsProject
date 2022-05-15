@@ -1,0 +1,11 @@
+@typeparam T where T : ProjectsProject.Common.ISeverityDto
+@namespace ProjectsProject.Blazor.Components
+@inherits ProjectsProjectComponentBase
+<MudBlazor.Column T="T"
+                  Hideable="false"
+                  Title=@L["Severity"]
+                  Grouping="true">
+    <CellTemplate>
+        <SeverityAlert Severity="@context.Item.Severity"/>
+    </CellTemplate>
+</MudBlazor.Column>

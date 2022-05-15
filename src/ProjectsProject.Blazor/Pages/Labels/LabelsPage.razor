@@ -1,54 +1,78 @@
 @page "/labels"
 @using ProjectsProject.Localization
 @using ProjectsProject.Labels
-@using NUglify
-@inherits Volo.Abp.AspNetCore.Components.Web.BasicTheme.Components.MudCrudPageBase<ProjectsProject.Labels.ILabelsAppService, ProjectsProject.Labels.LabelDto, Guid, Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto, ProjectsProject.Labels.LabelWriteDto>
+@inherits Volo.Abp.AspNetCore.Components.Web.BasicTheme.Components.MudCrudPageBase<ProjectsProject.Labels.ILabelsAppService, ProjectsProject.Labels.LabelShortDto, Guid, Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto, ProjectsProject.Labels.LabelWriteDto>
 @inject AbpBlazorMessageLocalizerHelper<ProjectsProjectResource> LH
 
-<MudDataGrid T="LabelDto"
+@{
+    RenderFragment<LabelWriteDto> labelForm = dto => @<div>
+        <MudTextField @bind-Value="@dto.Name" 
+                      Label=@L["Name"]
+                      For=@(() => dto.Name) />
+        <br />
+        <MudTextField @bind-Value="@dto.Description"
+                      Label=@L["Description"]
+                      For=@(() => dto.Description) />
+        <br />
+        <MudColorPicker @bind-Text="@dto.Color"
+                        DisableAlpha="true"
+                        Label="Color"/>
+        <br />
+        <MudField Label="Preview">
+            <LabelChip Name="@dto.Name" Color="@dto.Color" Description="@dto.Description"/>
+        </MudField>
+    </div>;
+}
+
+<MudDataGrid T="LabelShortDto"
              @ref="DataGrid"
              Striped="true"
              Hideable="true"
              Elevation="8"
              ServerData="LoadServerData">
-<ToolBarContent>
-    <MudText Typo="Typo.h5">@L["Labels"]</MudText>
-    <MudSpacer />
-    <MudButton Color="Color.Primary"
-               Variant="Variant.Outlined"
-               Disabled="!HasCreatePermission"
-               OnClick="OpenCreateModalAsync">
-        @L["NewLabel"]
-    </MudButton>
-</ToolBarContent>
-<Columns>
-    <MudBlazor.Column T="LabelDto"
-                      Field="@nameof(LabelDto.Id)"
-                      Hideable="false"
-                      Title="@L["Actions"]">
-        <CellTemplate>
-            @if (HasUpdatePermission)
-            {
-                <MudIconButton Icon="fas fa-edit" 
-                               OnClick="@(async _ => { await OpenEditModalAsync(context.Item); })"
-                               Size="Size.Small" />
-            }
-            @if (HasDeletePermission)
-            {   
-                <MudIconButton Icon="fas fa-trash" 
-                               OnClick="@(async _ => { await DeleteEntityAsync(context.Item);} )"
-                               Size="Size.Small" />
-            }
-        </CellTemplate>
-    </MudBlazor.Column>
-    <MudBlazor.Column T="LabelDto"
-                      Field="@nameof(LabelDto.Name)"
-                      Hideable="false"
-                      Title=@L["Name"] />
-    <MudBlazor.Column T="LabelDto"
-                      Field="@nameof(LabelDto.Color)"
-                      Title=@L["Color"] />
-</Columns>
+    <ToolBarContent>
+        <MudText Typo="Typo.h5">@L["Labels"]</MudText>
+        <MudSpacer />
+        <MudButton Color="Color.Primary"
+                   Variant="Variant.Outlined"
+                   Disabled="!HasCreatePermission"
+                   OnClick="OpenCreateModalAsync">
+            @L["NewLabel"]
+        </MudButton>
+    </ToolBarContent>
+    <Columns>
+        <MudBlazor.Column T="LabelShortDto"
+                          Field="@nameof(LabelShortDto.Id)"
+                          Hideable="false"
+                          Title="@L["Actions"]">
+            <CellTemplate>
+                @if (HasUpdatePermission)
+                {
+                    <MudIconButton Icon="fas fa-edit" 
+                                   OnClick="@(async _ => { await OpenEditModalAsync(context.Item); })"
+                                   Size="Size.Small" />
+                }
+                @if (HasDeletePermission)
+                {   
+                    <MudIconButton Icon="fas fa-trash" 
+                                   OnClick="@(async _ => { await DeleteEntityAsync(context.Item);} )"
+                                   Size="Size.Small" />
+                }
+            </CellTemplate>
+        </MudBlazor.Column>
+        <MudBlazor.Column T="LabelShortDto"
+                          Field="@nameof(LabelShortDto.Name)"
+                          Hideable="false"
+                          Title=@L["Name"]>
+            <CellTemplate>
+                <LabelChip Label="@context.Item" />
+            </CellTemplate>
+        </MudBlazor.Column>
+        <MudBlazor.Column T="LabelShortDto"
+                          Field="@nameof(LabelShortDto.Description)"
+                          Hideable="false"
+                          Title=@L["Description"] />
+    </Columns>
 </MudDataGrid>
 
 <MudDialog @bind-IsVisible="CreateDialogVisible" 
@@ -59,11 +83,7 @@
     <DialogContent>
         <MudForm Model="@NewEntity"
                  @ref="CreateForm">
-            <MudTextField @bind-Value="@NewEntity.Name" 
-                          Label=@L["Name"]
-                          For=@(() => EditingEntity.Name) />
-            <br />
-            <MudColorPicker @bind-Text="@NewEntity.Color"/>
+            @labelForm(NewEntity)
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -87,11 +107,7 @@
     <DialogContent>
         <MudForm Model="@EditingEntity"
                  @ref="EditForm">
-            <MudTextField @bind-Value="@EditingEntity.Name" 
-                          Label=@L["Name"]
-                          For=@(() => EditingEntity.Name) />
-            <br />
-            <MudColorPicker @bind-Text="@EditingEntity.Color"/>
+            @labelForm(EditingEntity)
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -111,6 +127,6 @@
 {
     public LabelsPage()
     {
-        LocalizationResource = typeof(Resource);
+        LocalizationResource = typeof(ProjectsProjectResource);
     }
 }

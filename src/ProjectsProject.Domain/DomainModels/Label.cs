@@ -10,7 +10,9 @@ public class Label : CreationAuditedEntity<Guid>, IUserEntity
 {
     public string Name { get; set; } = string.Empty;
 
-    public string? Color { get; set; }
+    public string Color { get; set; } = string.Empty;
+
+    public string Description { get; set; } = string.Empty;
 
     public Guid UserId { get; set; }
     public IdentityUser? User { get; set; }

@@ -1,0 +1,51 @@
+@namespace ProjectsProject.Blazor.Components
+@using ProjectsProject.Labels
+@using Volo.Abp.TenantManagement
+@inherits ProjectsProjectComponentBase
+
+<MudSelect T="Guid" MultiSelection="true" SelectedValues="LabelIds" SelectedValuesChanged="SetIds"
+           MultiSelectionTextFunc="@(selectedIds => $"{selectedIds.Count} label{(selectedIds.Count == 1 ? "s have":" has")} been selected")">
+    @foreach (var label in _availableLabels)
+    {
+        <MudSelectItem @key="@label.Id" T="Guid" Value="@label.Id">
+            @label.Name
+        </MudSelectItem>
+    }
+</MudSelect>
+<br />
+<LabelsRow Labels="@LabelIds.Join(_availableLabels, guid => guid, dto => dto.Id, (_, dto) => dto)"/>
+
+@code {
+
+    [Parameter]
+    public IEnumerable<Guid> LabelIds { get; set; } = new HashSet<Guid>();
+    
+    [Parameter]
+    public EventCallback<IEnumerable<Guid>> LabelIdsChanged { get; set; }
+
+    [Inject]
+    public ILabelsAppService LabelsAppService { get; set; } = null!;
+    
+    private IEnumerable<LabelShortDto> _availableLabels = new HashSet<LabelShortDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _availableLabels = (await LabelsAppService.GetListAsync(new GetTenantsInput())).Items;
+        await base.OnInitializedAsync();
+    }
+
+    private void SetIds(IEnumerable<Guid> labelsIds)
+    {
+        labelsIds = labelsIds.ToArray();
+        if (LabelIds.SequenceEqual(labelsIds))
+        {
+            return;
+        }
+
+        LabelIds = labelsIds;
+        if (LabelIdsChanged.HasDelegate)
+        {
+            LabelIdsChanged.InvokeAsync(LabelIds);
+        }
+    }
+}
