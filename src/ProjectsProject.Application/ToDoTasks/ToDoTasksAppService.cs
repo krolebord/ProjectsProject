@@ -56,6 +56,15 @@ public class ToDoTasksAppService
         return await MapToGetOutputDtoAsync(entity);
     }
 
+    public async Task SetDone(Guid taskId, bool isDone)
+    {
+        await CheckUpdatePolicyAsync();
+
+        var entity = await GetEntityByIdAsync(taskId);
+        entity.IsDone = isDone;
+        await Repository.UpdateAsync(entity, autoSave: true);
+    }
+
     protected override async Task<IQueryable<ToDoTask>> CreateFilteredQueryAsync(PagedAndSortedResultRequestDto input)
     {
         return await ReadOnlyRepository.WithDetailsAsync(x => x.Labels, x => x.Project);

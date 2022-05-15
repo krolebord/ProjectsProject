@@ -1,5 +1,6 @@
 @page "/tasks"
 @using ProjectsProject.Localization
+@using ProjectsProject.Projects
 @using ProjectsProject.ToDoTasks
 @using Severity=ProjectsProject.Enums.Severity
 @inherits MudCrudPageBase<ProjectsProject.ToDoTasks.IToDoTasksAppService, ProjectsProject.ToDoTasks.ToDoTaskDto, Guid, Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto, ProjectsProject.ToDoTasks.ToDoTaskWriteDto>
@@ -68,6 +69,18 @@
                     <MudIconButton Icon="fas fa-trash" 
                                    OnClick="@(async _ => { await DeleteEntityAsync(context.Item);} )"
                                    Size="Size.Small" />
+                }
+            </CellTemplate>
+        </MudBlazor.Column>
+        <MudBlazor.Column T="ToDoTaskDto"
+                          Field="@nameof(ToDoTaskDto.IsDone)"
+                          Hideable="false"
+                          Groupable="false"
+                          Title="">
+            <CellTemplate>
+                @if (HasUpdatePermission)
+                {
+                    <MudCheckBox T="bool" Checked="@context.Item.IsDone" CheckedChanged="@(_ => ToggleDone(context.Item))"/>
                 }
             </CellTemplate>
         </MudBlazor.Column>
@@ -142,5 +155,12 @@
     public ToDoTasksPage()
     {
         LocalizationResource = typeof(ProjectsProjectResource);
+    }
+
+    public async Task ToggleDone(ToDoTaskDto project)
+    {
+        project.IsDone = !project.IsDone;
+        await AppService.SetDone(project.Id, project.IsDone);
+        await InvokeAsync(StateHasChanged);
     }
 }
