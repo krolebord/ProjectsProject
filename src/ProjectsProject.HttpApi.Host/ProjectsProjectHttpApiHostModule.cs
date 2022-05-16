@@ -86,7 +86,7 @@ public class ProjectsProjectHttpApiHostModule : AbpModule
     {
         var hostingEnvironment = context.Services.GetHostingEnvironment();
 
-        if (hostingEnvironment.IsDevelopment())
+        /*if (hostingEnvironment.IsDevelopment())
         {
             Configure<AbpVirtualFileSystemOptions>(options =>
             {
@@ -103,7 +103,7 @@ public class ProjectsProjectHttpApiHostModule : AbpModule
                     Path.Combine(hostingEnvironment.ContentRootPath,
                         $"..{Path.DirectorySeparatorChar}ProjectsProject.Application"));
             });
-        }
+        }*/
     }
 
     private void ConfigureConventionalControllers()

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProjectsProject.Data;
 using Serilog;
 using Serilog.Events;
 
@@ -22,9 +23,7 @@ public class Program
             .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
             .Enrich.FromLogContext()
             .WriteTo.Async(c => c.File("Logs/logs.txt"))
-#if DEBUG
             .WriteTo.Async(c => c.Console())
-#endif
             .CreateLogger();
 
         try
@@ -36,6 +35,10 @@ public class Program
                 .UseSerilog();
             await builder.AddApplicationAsync<ProjectsProjectHttpApiHostModule>();
             var app = builder.Build();
+            using var scope = app.Services.CreateScope();
+            await scope.ServiceProvider
+                .GetRequiredService<ProjectsProjectDbMigrationService>()
+                .MigrateAsync();
             await app.InitializeApplicationAsync();
             await app.RunAsync();
             return 0;

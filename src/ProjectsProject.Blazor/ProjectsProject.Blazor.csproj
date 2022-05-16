@@ -6,6 +6,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
     <Nullable>enable</Nullable>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <PublishTrimmed>False</PublishTrimmed>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,29 +16,15 @@
     <PackageReference Include="Krolebord.CustomPackages.Blazor.StateNotifiers" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Volo.Abp.Autofac.WebAssembly" Version="5.2.1" />
-    <ProjectReference Include="..\..\packages\Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme\Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Volo.Abp.Identity.Blazor.WebAssembly" Version="5.2.1" />
     <PackageReference Include="Volo.Abp.TenantManagement.Blazor.WebAssembly" Version="5.2.1" />
     <PackageReference Include="Volo.Abp.SettingManagement.Blazor.WebAssembly" Version="5.2.1" />
   </ItemGroup>
-
+  
   <ItemGroup>
+    <ProjectReference Include="..\..\packages\Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme\Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme.csproj" />
     <ProjectReference Include="..\..\src\ProjectsProject.HttpApi.Client\ProjectsProject.HttpApi.Client.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <AdditionalFiles Include="Pages\Labels\LabelsPage.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Projects" />
   </ItemGroup>
 
 </Project>

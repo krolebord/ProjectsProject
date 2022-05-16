@@ -1,0 +1,49 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres
+    networks:
+      - ppnetwork
+    environment:
+      - POSTGRES_USER=sa
+      - POSTGRES_PASSWORD=SecretPassword19!
+      - POSTGRES_DB=ProjectsProject
+    ports:
+      - '44375:5432'
+  
+  ppapi:
+    image: ppapi
+    build:
+      dockerfile: .docker/Api.Dockerfile
+    depends_on:
+      - postgres
+    networks:
+      - ppnetwork
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:44376
+      - ConnectionStrings:Default=Host=postgres;Port=5432;Database=ProjectsProject;User ID=sa;Password=SecretPassword19!;
+      - App:SelfUrl=http://localhost:44376
+      - App:CorsOrigins=http://localhost:44376,http://localhost:44377
+      - App:RedirectAllowedUrls=http://localhost:44376,http://localhost:44377
+      - AuthServer:Authority=http://localhost:44376
+    ports:
+      - "44376:44376"
+    
+  ppapp:
+    image: ppapp
+    build:
+      dockerfile: .docker/App.Dockerfile
+    depends_on:
+      - ppapi
+    networks:
+      - ppnetwork
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Release
+      - ASPNETCORE_URLS=http://+:44377
+    ports:
+      - "44377:44377"
+
+networks:
+  ppnetwork:
+    driver: bridge
